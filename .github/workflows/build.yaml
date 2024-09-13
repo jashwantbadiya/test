@@ -22,13 +22,13 @@ jobs:
         dotnet-version: '6.0.x'  # Use your project's .NET version
 
     - name: Restore dependencies
-      run: dotnet restore test/dotnet-hello-world/dotnet-hello-world.sln
+      run: dotnet restore dotnet-hello-world/dotnet-hello-world.sln
 
     - name: Build the project
-      run: dotnet build test/dotnet-hello-world/dotnet-hello-world.sln
+      run: dotnet build dotnet-hello-world/dotnet-hello-world.sln
 
     - name: Run tests
-      run: dotnet test test/dotnet-hello-world/dotnet-hello-world.sln
+      run: dotnet test dotnet-hello-world/dotnet-hello-world.sln
 
     - name: SonarQube Scan
       env:
