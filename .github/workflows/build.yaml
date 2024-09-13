@@ -19,7 +19,7 @@ jobs:
     - name: Set up .NET
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: '9.0.x'  # Update to .NET 9.0
+        dotnet-version: '9.0.x'
 
     - name: Install SonarQube Scanner
       run: dotnet tool install --global dotnet-sonarscanner
@@ -38,8 +38,9 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       run: |
-        export PATH="$PATH:/root/.dotnet/tools"  # Ensure the installed tool is in the PATH
-        dotnet-sonarscanner begin /k:"6972d0cac6f69ab4b9de62963500a0c306a02e62" /o:"<your-organization>" /d:sonar.host.url="http://10.11.12.48:9000/" /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
+        export PATH="$PATH:/root/.dotnet/tools"
+        dotnet-sonarscanner begin /k:"6972d0cac6f69ab4b9de62963500a0c306a02e62" /d:sonar.host.url="http://10.11.12.48:9000/" /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
         dotnet build dotnet-hello-world/dotnet-hello-world.sln
         dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
+
 
