@@ -39,7 +39,7 @@ jobs:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       run: |
         export PATH="$PATH:/root/.dotnet/tools"
-        dotnet-sonarscanner begin /k:"6972d0cac6f69ab4b9de62963500a0c306a02e62" /d:sonar.host.url="http://10.11.12.48:9000/" /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
+        dotnet-sonarscanner begin /k:"testing" /d:sonar.host.url="http://10.11.12.48:9000" /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
         dotnet build dotnet-hello-world/dotnet-hello-world.sln
         dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
 
