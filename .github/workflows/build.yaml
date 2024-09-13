@@ -35,7 +35,10 @@ jobs:
       
     - name: Set SonarQube Scanner options
       run: export SONAR_SCANNER_OPTS="-Dsonar.scanner.timeout=300"
-      
+
+    - name: Test SonarQube Server Connectivity
+      run: curl -v http://10.11.12.48:9000
+  
     - name: SonarQube Scan
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
