@@ -1,47 +1,45 @@
-name: SonarQube Scan
-
+name: Build
 on:
   push:
     branches:
-      - main
-  pull_request:
-    branches:
-      - main
+      - master # or the name of your main branch
 
 jobs:
-  sonarQubeScan:
-    runs-on: ubuntu-latest
-
+  build:
+    name: Build
+    runs-on: windows-latest
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-
-    - name: Set up .NET
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: '9.0.x'
-
-    - name: Install SonarQube Scanner
-      run: dotnet tool install --global dotnet-sonarscanner
-
-    - name: Restore dependencies
-      run: dotnet restore dotnet-hello-world/dotnet-hello-world.sln
-
-    - name: Build the project
-      run: dotnet build dotnet-hello-world/dotnet-hello-world.sln
-
-    - name: Run tests
-      run: dotnet test dotnet-hello-world/dotnet-hello-world.sln
-      
-    - name: Set SonarQube Scanner options
-      run: export SONAR_SCANNER_OPTS="-Dsonar.scanner.timeout=300"
-      
-    - name: SonarQube Scan
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      run: |
-        export PATH="$PATH:/root/.dotnet/tools"
-        dotnet-sonarscanner begin /k:"testing" /d:sonar.host.url="http://10.11.12.48:9000" /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
-        dotnet build dotnet-hello-world/dotnet-hello-world.sln
-        dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.11
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: Cache SonarQube packages
+        uses: actions/cache@v1
+        with:
+          path: ~\sonar\cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+      - name: Cache SonarQube scanner
+        id: cache-sonar-scanner
+        uses: actions/cache@v1
+        with:
+          path: .\.sonar\scanner
+          key: ${{ runner.os }}-sonar-scanner
+          restore-keys: ${{ runner.os }}-sonar-scanner
+      - name: Install SonarQube scanner
+        if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
+        shell: powershell
+        run: |
+          New-Item -Path .\.sonar\scanner -ItemType Directory
+          dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner
+      - name: Build and analyze
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+        shell: powershell
+        run: |
+          .\.sonar\scanner\dotnet-sonarscanner begin /k:"testing" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL }}"
+          dotnet build
+          .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
