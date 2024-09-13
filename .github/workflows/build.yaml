@@ -32,7 +32,10 @@ jobs:
 
     - name: Run tests
       run: dotnet test dotnet-hello-world/dotnet-hello-world.sln
-
+      
+    - name: Set SonarQube Scanner options
+      run: export SONAR_SCANNER_OPTS="-Dsonar.scanner.timeout=300"
+      
     - name: SonarQube Scan
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
