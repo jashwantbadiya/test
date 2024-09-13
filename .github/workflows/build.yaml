@@ -24,6 +24,9 @@ jobs:
     - name: Install SonarQube Scanner
       run: dotnet tool install --global dotnet-sonarscanner
 
+    - name: Verify SonarQube Server Connectivity
+      run: curl -I http://10.11.12.48:9000
+
     - name: Restore dependencies
       run: dotnet restore dotnet-hello-world/dotnet-hello-world.sln
 
@@ -42,5 +45,3 @@ jobs:
         dotnet-sonarscanner begin /k:"testing" /d:sonar.host.url="http://10.11.12.48:9000" /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
         dotnet build dotnet-hello-world/dotnet-hello-world.sln
         dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
-
-
