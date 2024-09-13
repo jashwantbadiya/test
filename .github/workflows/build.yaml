@@ -22,13 +22,13 @@ jobs:
         dotnet-version: '6.0.x'  # Use your project's .NET version
 
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore test/dotnet-hello-world/dotnet-hello-world.sln
 
     - name: Build the project
-      run: dotnet build --no-restore
+      run: dotnet build test/dotnet-hello-world/dotnet-hello-world.sln
 
     - name: Run tests
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test test/dotnet-hello-world/dotnet-hello-world.sln
 
     - name: SonarQube Scan
       env:
@@ -36,6 +36,5 @@ jobs:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       run: |
         dotnet-sonarscanner begin /k:"<your-project-key>" /o:"<your-organization>" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
-        dotnet build
+        dotnet build test/dotnet-hello-world/dotnet-hello-world.sln
         dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
-
