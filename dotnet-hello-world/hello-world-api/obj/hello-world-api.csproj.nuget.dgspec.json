@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Jashwant Raysi\\Desktop\\New folder\\dotnet-hello-world\\hello-world-api\\hello-world-api.csproj": {}
+    "C:\\Users\\Jashwant Raysi\\Desktop\\New folder\\test\\dotnet-hello-world\\hello-world-api\\hello-world-api.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Jashwant Raysi\\Desktop\\New folder\\dotnet-hello-world\\hello-world-api\\hello-world-api.csproj": {
+    "C:\\Users\\Jashwant Raysi\\Desktop\\New folder\\test\\dotnet-hello-world\\hello-world-api\\hello-world-api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Jashwant Raysi\\Desktop\\New folder\\dotnet-hello-world\\hello-world-api\\hello-world-api.csproj",
+        "projectUniqueName": "C:\\Users\\Jashwant Raysi\\Desktop\\New folder\\test\\dotnet-hello-world\\hello-world-api\\hello-world-api.csproj",
         "projectName": "hello-world-api",
-        "projectPath": "C:\\Users\\Jashwant Raysi\\Desktop\\New folder\\dotnet-hello-world\\hello-world-api\\hello-world-api.csproj",
+        "projectPath": "C:\\Users\\Jashwant Raysi\\Desktop\\New folder\\test\\dotnet-hello-world\\hello-world-api\\hello-world-api.csproj",
         "packagesPath": "C:\\Users\\Jashwant Raysi\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Jashwant Raysi\\Desktop\\New folder\\dotnet-hello-world\\hello-world-api\\obj\\",
+        "outputPath": "C:\\Users\\Jashwant Raysi\\Desktop\\New folder\\test\\dotnet-hello-world\\hello-world-api\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Jashwant Raysi\\AppData\\Roaming\\NuGet\\NuGet.Config"
