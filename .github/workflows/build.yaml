@@ -3,10 +3,10 @@ name: SonarQube Scan
 on:
   push:
     branches:
-      - main  # Replace with your branch name if different
+      - main
   pull_request:
     branches:
-      - main  # Replace with your branch name if different
+      - main
 
 jobs:
   sonarQubeScan:
@@ -19,7 +19,7 @@ jobs:
     - name: Set up .NET
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: '6.0.x'  # Use your project's .NET version
+        dotnet-version: '9.0.x'  # Update to .NET 9.0
 
     - name: Restore dependencies
       run: dotnet restore dotnet-hello-world/dotnet-hello-world.sln
@@ -36,5 +36,5 @@ jobs:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       run: |
         dotnet-sonarscanner begin /k:"<your-project-key>" /o:"<your-organization>" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
-        dotnet build test/dotnet-hello-world/dotnet-hello-world.sln
+        dotnet build dotnet-hello-world/dotnet-hello-world.sln
         dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
