@@ -25,10 +25,15 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y openjdk-17-jdk
+        export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+        export PATH=$JAVA_HOME/bin:$PATH
         java -version
 
     - name: Install SonarQube Scanner
       run: dotnet tool install --global dotnet-sonarscanner
+
+    - name: Print SonarScanner Path
+      run: echo $PATH
 
     - name: Restore dependencies
       run: dotnet restore dotnet-hello-world/dotnet-hello-world.sln
@@ -38,15 +43,13 @@ jobs:
 
     - name: Run tests
       run: dotnet test dotnet-hello-world/dotnet-hello-world.sln
-    
+
     - name: Set SonarQube Scanner options
       run: export SONAR_SCANNER_OPTS="-Dsonar.scanner.timeout=300"
-  
-    - name: SonarQube Scan
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+    - name: Check Java Version in SonarQube Scan
       run: |
+        java -version
         export PATH="$PATH:/root/.dotnet/tools"
         dotnet-sonarscanner begin -k:"Github" /d:sonar.host.url="http://ca1.risknucleus.com:9004" /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
         dotnet build dotnet-hello-world/dotnet-hello-world.sln
