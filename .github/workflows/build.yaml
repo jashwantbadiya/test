@@ -21,6 +21,12 @@ jobs:
       with:
         dotnet-version: '9.0.x'
 
+    - name: Install SonarScanner for .NET
+      run: dotnet tool install --global dotnet-sonarscanner
+
+    - name: Add .NET tools to PATH
+      run: echo "$HOME/.dotnet/tools" >> $GITHUB_PATH
+
     - name: Print SonarScanner Path
       run: echo $PATH
 
@@ -39,7 +45,6 @@ jobs:
     - name: Check Java Version in SonarQube Scan
       run: |
         java -version
-        export PATH="$PATH:/root/.dotnet/tools"
         dotnet-sonarscanner begin -k:"Github" /d:sonar.host.url="http://ca1.risknucleus.com:9004" /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
         dotnet build dotnet-hello-world/dotnet-hello-world.sln
         dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
