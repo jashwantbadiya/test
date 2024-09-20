@@ -9,12 +9,13 @@ namespace hello_world_api.Controllers
     [Route("api/[controller]")]
     public class HelloController : Controller
     {
+        private const string HelloWorldMessage = "Hello world jackie 789";
+
         // GET api/helllo
         [HttpGet]
         public string Get()
         {
-            return "Hello world jackie 789 ";
+            return HelloWorldMessage;
         }
-
     }
 }
