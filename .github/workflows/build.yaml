@@ -21,8 +21,8 @@ jobs:
       with:
         dotnet-version: '9.0.x'
 
-    - name: Install SonarScanner for .NET
-      run: dotnet tool install --global dotnet-sonarscanner
+    - name: Install a specific version of SonarScanner for .NET
+      run: dotnet tool install --global dotnet-sonarscanner --version 5.6.0
 
     - name: Add .NET tools to PATH
       run: echo "$HOME/.dotnet/tools" >> $GITHUB_PATH
